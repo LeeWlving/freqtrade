@@ -11,17 +11,17 @@ jobs:
       - name: Pull source image
         run: docker pull freqtradeorg/freqtrade:latest
 
-      - name: Tag image
-        run: |
-          docker tag freqtradeorg/freqtrade:latest \
-            registry.cn-hangzhou.aliyuncs.com/wenyun/freqtrade:latest
-
       - name: Login to Aliyun ACR
         run: |
           echo "${{ secrets.ALIYUN_REGISTRY_PASSWORD }}" | docker login \
             registry.cn-hangzhou.aliyuncs.com \
             --username "${{ secrets.ALIYUN_REGISTRY_USER }}" \
             --password-stdin
+
+      - name: Tag image
+        run: |
+          docker tag freqtradeorg/freqtrade:latest \
+            registry.cn-hangzhou.aliyuncs.com/wenyun/freqtrade:latest
 
       - name: Push to Aliyun ACR
         run: docker push registry.cn-hangzhou.aliyuncs.com/wenyun/freqtrade:latest
